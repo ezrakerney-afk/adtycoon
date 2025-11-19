@@ -104,59 +104,22 @@
       align-items: center;
       gap: 10px;
     }
-    .ad-circle-wrap {
-      position: relative;
-      width: 200px;
-      height: 200px;
-      margin-bottom: 6px;
-    }
-    .ad-circle-border {
-      position: absolute;
-      inset: 0;
-      border-radius: 50%;
-      background: conic-gradient(
-        from 180deg,
-        #22c55e,
-        #a3e635,
-        #f97316,
-        #22c55e
-      );
-      opacity: 0.9;
-      filter: blur(0.2px);
-    }
-    .ad-circle-inner {
-      position: absolute;
-      inset: 8px;
-      border-radius: 50%;
-      background: radial-gradient(circle at 30% 20%, #111827, #020617);
-      border: 2px solid rgba(15, 23, 42, 0.9);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      gap: 4px;
-    }
+
+    /* Image-based button */
     #watchButton {
       border: none;
+      padding: 0;
       background: transparent;
-      color: #f9fafb;
       cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
-    }
-    #watchButton span.big {
-      font-size: 1.15rem;
-      font-weight: 700;
-    }
-    #watchButton span.small {
-      font-size: 0.8rem;
-      opacity: 0.8;
     }
     #watchButton:disabled {
       cursor: default;
-      opacity: 0.7;
+      opacity: 0.9;
+    }
+    #watchButtonImage {
+      width: 220px;
+      max-width: 100%;
+      display: block;
     }
 
     .progress-wrap {
@@ -290,15 +253,14 @@
       </div>
 
       <div class="ad-area">
-        <div class="ad-circle-wrap">
-          <div class="ad-circle-border"></div>
-          <div class="ad-circle-inner">
-            <button id="watchButton">
-              <span class="big">Watch Ad</span>
-              <span class="small">One click = one ad = points</span>
-            </button>
-          </div>
-        </div>
+        <!-- Image-based watch button -->
+        <button id="watchButton">
+          <img
+            id="watchButtonImage"
+            alt="Watch Ad button"
+            src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iODAiIHZpZXdCb3g9IjAgMCAyMDAgODAiPgogIDxkZWZzPgogICAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkVXAiIHgxPSIwIiB5MT0iMCIgeDI9IjAiIHkyPSIxIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmNzc3NyIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iI2ZmMzEzMSIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNiODE2MTYiLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgPC9kZWZzPgogIDxyZWN0IHg9IjUiIHk9IjUiIHJ4PSIyMCIgcnk9IjIwIiB3aWR0aD0iMTkwIiBoZWlnaHQ9IjcwIiBmaWxsPSJ1cmwoI2dyYWRVcCkiIC8+CiAgPHJlY3QgeD0iNSIgeT0iNSIgcng9IjIwIiByeT0iMjAiIHdpZHRoPSIxOTAiIGhlaWdodD0iNzAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzdhMGYwZiIgc3Ryb2tlLXdpZHRoPSI0Ii8+CiAgPHRleHQgeD0iMTAwIiB5PSI0OCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSIyNiIgZmlsbD0iI2ZmZmZmZiIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIj5XYXRjaCBBZDwvdGV4dD4KPC9zdmc+"
+          />
+        </button>
 
         <div class="progress-wrap">
           <div class="progress-bar" id="progressBar"></div>
@@ -410,11 +372,19 @@
   </div>
 
   <script>
+    // Button image sources (normal & pressed)
+    const BUTTON_UP_SRC =
+      "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iODAiIHZpZXdCb3g9IjAgMCAyMDAgODAiPgogIDxkZWZzPgogICAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkVXAiIHgxPSIwIiB5MT0iMCIgeDI9IjAiIHkyPSIxIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmNzc3NyIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iI2ZmMzEzMSIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNiODE2MTYiLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgPC9kZWZzPgogIDxyZWN0IHg9IjUiIHk9IjUiIHJ4PSIyMCIgcnk9IjIwIiB3aWR0aD0iMTkwIiBoZWlnaHQ9IjcwIiBmaWxsPSJ1cmwoI2dyYWRVcCkiIC8+CiAgPHJlY3QgeD0iNSIgeT0iNSIgcng9IjIwIiByeT0iMjAiIHdpZHRoPSIxOTAiIGhlaWdodD0iNzAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzdhMGYwZiIgc3Ryb2tlLXdpZHRoPSI0Ii8+CiAgPHRleHQgeD0iMTAwIiB5PSI0OCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSIyNiIgZmlsbD0iI2ZmZmZmZiIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIj5XYXRjaCBBZDwvdGV4dD4KPC9zdmc+";
+
+    const BUTTON_DOWN_SRC =
+      "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iODAiIHZpZXdCb3g9IjAgMCAyMDAgODAiPgogIDxkZWZzPgogICAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkRG93biIgeDE9IjAiIHkxPSIwIiB4Mj0iMCIgeTI9IjEiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjZDYzZDNkIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iNTAlIiBzdG9wLWNvbG9yPSIjYjgxNjE2Ii8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzdhMGYwZiIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPHJlY3QgeD0iOCIgeT0iOSIgcng9IjIwIiByeT0iMjAiIHdpZHRoPSIxODQiIGhlaWdodD0iNjQiIGZpbGw9InVybCgjZ3JhZERvd24pIiAvPgogIDxyZWN0IHg9IjgiIHk9IjkiIHJ4PSIyMCIgcnk9IjIwIiB3aWR0aD0iMTg0IiBoZWlnaHQ9IjY0IiBmaWxsPSJub25lIiBzdHJva2U9IiM1NDBhMGEiIHN0cm9rZS13aWR0aD0iNCIvPgogIDx0ZXh0IHg9IjEwMCIgeT0iNTAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMjYiIGZpbGw9IiNmZmZmZmYiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiI+V2F0Y2ggQWQ8L3RleHQ+Cjwvc3ZnPg==";
+
     // DOM elements
     const pointsDisplay = document.getElementById("pointsDisplay");
     const perAdDisplay = document.getElementById("perAdDisplay");
     const passiveDisplay = document.getElementById("passiveDisplay");
     const watchButton = document.getElementById("watchButton");
+    const watchButtonImage = document.getElementById("watchButtonImage");
     const progressBar = document.getElementById("progressBar");
     const statusText = document.getElementById("statusText");
     const rewardInfo = document.getElementById("rewardInfo");
@@ -523,6 +493,7 @@
       progress = 0;
       progressBar.style.width = "0%";
       watchButton.disabled = true;
+      watchButtonImage.src = BUTTON_DOWN_SRC;
       statusText.textContent = "Ad is playing... wait for it to finish to earn points.";
 
       const steps = BASE_AD_MS / TICK_MS;
@@ -554,6 +525,7 @@
       points += reward;
       watching = false;
       watchButton.disabled = false;
+      watchButtonImage.src = BUTTON_UP_SRC;
       statusText.textContent = `Ad finished! You gained ${reward.toFixed(
         0
       )} points.${message} Click again to watch another.`;
@@ -628,14 +600,18 @@
       }
     }
 
+    // Event listeners
     watchButton.addEventListener("click", startAd);
     betterDealsBtn.addEventListener("click", buyBetterDeals);
     multiplierBtn.addEventListener("click", buyMultiplier);
     bonusBtn.addEventListener("click", buyBonus);
     contractsBtn.addEventListener("click", buyContracts);
 
+    // Passive income loop
     setInterval(passiveTick, 1000);
 
+    // Ensure starting state uses the "up" button
+    watchButtonImage.src = BUTTON_UP_SRC;
     updateUI();
   </script>
 </body>
