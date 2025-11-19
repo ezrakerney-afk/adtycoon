@@ -14,7 +14,9 @@
 
     * {
       box-sizing: border-box;
-      font-family: "3Dumb", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-family: "3Dumb", system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      color: #000000;
     }
 
     body {
@@ -23,9 +25,9 @@
       display: flex;
       align-items: stretch;
       justify-content: center;
-      background: radial-gradient(circle at top, #1e293b 0, #020617 55%, #000 100%);
-      color: #f9fafb;
+      background: #ffffff;
     }
+
     .shell {
       width: 100%;
       max-width: 960px;
@@ -33,19 +35,22 @@
       display: flex;
       gap: 16px;
     }
+
     .panel {
-      background: rgba(15, 23, 42, 0.96);
+      background: #ffffff;
       border-radius: 18px;
-      border: 1px solid rgba(148, 163, 184, 0.35);
-      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.65);
+      border: 1px solid #e5e7eb;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.06);
       padding: 16px 18px 18px;
     }
+
     .panel-main {
       flex: 3;
       display: flex;
       flex-direction: column;
       align-items: center;
     }
+
     .panel-upgrades {
       flex: 2;
       overflow-y: auto;
@@ -59,39 +64,45 @@
       justify-content: space-between;
       margin-bottom: 12px;
     }
+
     .title {
       margin: 0;
       font-size: 1.4rem;
     }
+
     .tag {
       font-size: 0.7rem;
       text-transform: uppercase;
       padding: 3px 9px;
       border-radius: 999px;
-      border: 1px solid rgba(52, 211, 153, 0.7);
-      background: rgba(6, 95, 70, 0.3);
+      border: 1px solid #6ee7b7;
+      background: #ecfdf5;
       letter-spacing: 0.09em;
     }
+
     .stats-row {
       width: 100%;
       display: flex;
       gap: 10px;
       margin-bottom: 12px;
     }
+
     .stat {
       flex: 1;
       padding: 8px 10px;
       border-radius: 12px;
-      border: 1px solid rgba(51, 65, 85, 0.9);
-      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid #e5e7eb;
+      background: #ffffff;
     }
+
     .stat-label {
       font-size: 0.72rem;
       text-transform: uppercase;
       letter-spacing: 0.08em;
-      color: #9ca3af;
+      color: #6b7280;
       margin-bottom: 2px;
     }
+
     .stat-value {
       font-size: 1.15rem;
       font-weight: 600;
@@ -114,8 +125,8 @@
       background: radial-gradient(circle at 30% 20%, #ffb3b3, #ff3131, #b81616);
       box-shadow:
         0 12px 0 #5a0b0b,
-        0 18px 25px rgba(0, 0, 0, 0.7);
-      color: #fff;
+        0 18px 25px rgba(0, 0, 0, 0.25);
+      color: #000000;
       font-size: 26px;
       text-transform: uppercase;
       letter-spacing: 0.07em;
@@ -123,47 +134,33 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      text-shadow: 0 2px 0 rgba(0, 0, 0, 0.4);
       transition: transform 0.08s ease, box-shadow 0.08s ease, background 0.1s ease;
       padding: 0;
     }
+
     #watchButton:disabled {
       cursor: default;
       opacity: 0.9;
     }
+
     /* Pressed/playing state */
     #watchButton.playing {
       transform: translateY(6px);
       box-shadow:
         0 4px 0 #5a0b0b,
-        0 10px 18px rgba(0, 0, 0, 0.7);
+        0 10px 18px rgba(0, 0, 0, 0.25);
       background: radial-gradient(circle at 30% 20%, #ff8a8a, #e12727, #8f1010);
-    }
-
-    .progress-wrap {
-      width: 80%;
-      max-width: 320px;
-      height: 12px;
-      border-radius: 999px;
-      background: rgba(15, 23, 42, 0.95);
-      border: 1px solid rgba(55, 65, 81, 0.9);
-      overflow: hidden;
-    }
-    .progress-bar {
-      height: 100%;
-      width: 0%;
-      background: linear-gradient(90deg, #22c55e, #a3e635);
-      transition: width 0.1s linear;
     }
 
     .ad-meta {
       font-size: 0.85rem;
-      color: #d1d5db;
+      color: #111827;
       text-align: center;
     }
+
     #statusText {
       font-size: 0.8rem;
-      color: #9ca3af;
+      color: #6b7280;
       margin-top: 2px;
       text-align: center;
     }
@@ -174,42 +171,50 @@
       align-items: center;
       margin-bottom: 10px;
     }
+
     .upgrades-header h2 {
       margin: 0;
       font-size: 1rem;
     }
+
     .upgrades-header span {
       font-size: 0.75rem;
-      color: #9ca3af;
+      color: #6b7280;
     }
+
     .upgrade-card {
       border-radius: 12px;
       padding: 10px 10px 9px;
-      background: rgba(15, 23, 42, 0.9);
-      border: 1px solid rgba(51, 65, 85, 0.9);
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
       margin-bottom: 8px;
       display: flex;
       flex-direction: column;
       gap: 4px;
     }
+
     .upgrade-top {
       display: flex;
       justify-content: space-between;
       align-items: center;
       gap: 6px;
     }
+
     .upgrade-name {
       font-size: 0.9rem;
       font-weight: 600;
     }
+
     .upgrade-level {
       font-size: 0.75rem;
-      color: #9ca3af;
+      color: #6b7280;
     }
+
     .upgrade-desc {
       font-size: 0.8rem;
-      color: #e5e7eb;
+      color: #111827;
     }
+
     .upgrade-bottom {
       display: flex;
       justify-content: space-between;
@@ -217,20 +222,23 @@
       margin-top: 4px;
       gap: 6px;
     }
+
     .upgrade-cost {
       font-size: 0.8rem;
-      color: #e5e7eb;
+      color: #111827;
     }
+
     .upgrade-btn {
       border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.8);
-      background: #020617;
-      color: #f9fafb;
+      border: 1px solid #9ca3af;
+      background: #f9fafb;
+      color: #111827;
       padding: 4px 10px;
       font-size: 0.78rem;
       cursor: pointer;
       white-space: nowrap;
     }
+
     .upgrade-btn:disabled {
       opacity: 0.5;
       cursor: default;
@@ -240,6 +248,7 @@
       .shell {
         flex-direction: column;
       }
+
       .panel-upgrades {
         max-height: none;
       }
@@ -274,16 +283,11 @@
         <!-- Circular watch button -->
         <button id="watchButton">Watch Ad</button>
 
-        <div class="progress-wrap">
-          <div class="progress-bar" id="progressBar"></div>
-        </div>
-
-        <!-- Only reward text -->
         <div class="ad-meta">
           Reward: <span id="rewardInfo">5 points</span>
         </div>
         <div id="statusText">
-          Click the button to start. Wait until it finishes to earn points.
+          Click the button to start. Wait until the ad finishes to earn points.
         </div>
       </div>
     </div>
@@ -300,7 +304,9 @@
         <div class="upgrade-top">
           <div>
             <div class="upgrade-name">Better Ad Deals</div>
-            <div class="upgrade-level">Level <span id="betterDealsLevelDisplay">0</span></div>
+            <div class="upgrade-level">
+              Level <span id="betterDealsLevelDisplay">0</span>
+            </div>
           </div>
         </div>
         <div class="upgrade-desc">
@@ -389,40 +395,48 @@
     const perAdDisplay = document.getElementById("perAdDisplay");
     const passiveDisplay = document.getElementById("passiveDisplay");
     const watchButton = document.getElementById("watchButton");
-    const progressBar = document.getElementById("progressBar");
     const statusText = document.getElementById("statusText");
     const rewardInfo = document.getElementById("rewardInfo");
 
-    const betterDealsLevelDisplay = document.getElementById("betterDealsLevelDisplay");
-    const betterDealsCostDisplay = document.getElementById("betterDealsCostDisplay");
+    const betterDealsLevelDisplay = document.getElementById(
+      "betterDealsLevelDisplay"
+    );
+    const betterDealsCostDisplay = document.getElementById(
+      "betterDealsCostDisplay"
+    );
     const betterDealsBtn = document.getElementById("betterDealsBtn");
 
-    const multiplierLevelDisplay = document.getElementById("multiplierLevelDisplay");
-    const multiplierCostDisplay = document.getElementById("multiplierCostDisplay");
+    const multiplierLevelDisplay = document.getElementById(
+      "multiplierLevelDisplay"
+    );
+    const multiplierCostDisplay = document.getElementById(
+      "multiplierCostDisplay"
+    );
     const multiplierBtn = document.getElementById("multiplierBtn");
 
     const bonusChanceDisplay = document.getElementById("bonusChanceDisplay");
     const bonusCostDisplay = document.getElementById("bonusCostDisplay");
     const bonusBtn = document.getElementById("bonusBtn");
 
-    const contractsLevelDisplay = document.getElementById("contractsLevelDisplay");
+    const contractsLevelDisplay = document.getElementById(
+      "contractsLevelDisplay"
+    );
     const contractsCostDisplay = document.getElementById("contractsCostDisplay");
     const contractsBtn = document.getElementById("contractsBtn");
 
     // Game state
     let points = 0;
 
-    let betterDealsLevel = 0;   // +5 base pts per level
-    let multiplierLevel = 0;    // +0.25x per level
-    let bonusLevel = 0;         // +5% bonus chance per level
-    let contractsLevel = 0;     // +2 passive pts/s per level
+    let betterDealsLevel = 0; // +5 base pts per level
+    let multiplierLevel = 0; // +0.25x per level
+    let bonusLevel = 0; // +5% bonus chance per level
+    let contractsLevel = 0; // +2 passive pts/s per level
 
     const BASE_POINTS_PER_AD = 5;
-    const BASE_AD_MS = 15000; // 15 seconds (used by fake timer)
+    const BASE_AD_MS = 15000; // used by fake timer
     const TICK_MS = 100;
 
     let watching = false;
-    let progress = 0;
     let timer = null;
 
     // ---- SCALING HELPERS ----
@@ -495,62 +509,44 @@
 
     // ---- AD FLOW ----
 
-    // Call this when the player clicks the button
     function startAd() {
       if (watching) return;
       watching = true;
-      progress = 0;
-      progressBar.style.width = "0%";
       watchButton.disabled = true;
       watchButton.classList.add("playing");
-      statusText.textContent = "Ad is playing... wait for it to finish to earn points.";
+      statusText.textContent =
+        "Ad is playing... wait until it finishes to earn points.";
 
-      // >>> THIS is where you plug in your real rewarded ad <<<
-      //
-      // Example pseudo-code for a real SDK:
-      //
-      //   myAdSdk.showRewardedAd({
-      //     onComplete: () => onRealAdFinished(true),   // watched full, give reward
-      //     onClose:    () => onRealAdFinished(false),  // closed early, no reward
-      //     onError:    () => onRealAdFinished(false)   // error, no reward
-      //   });
-      //
-      // For now we still run a fake timer so the game works without ads:
-      simulateFakeAdTimer();
+      // >>> plug real rewarded ad here <<<
+      // Example:
+      // myAdSdk.showRewardedAd({
+      //   onComplete: () => onRealAdFinished(true),
+      //   onClose: () => onRealAdFinished(false),
+      //   onError: () => onRealAdFinished(false),
+      // });
+
+      simulateFakeAdTimer(); // keep for now so it works without a real SDK
       updateUI();
     }
 
-    // Fake timer just to visualize an ad playing.
-    // Remove / disable this once real ads are connected.
+    // Fake timer: remove/disable after adding real ads
     function simulateFakeAdTimer() {
-      const steps = BASE_AD_MS / TICK_MS;
-      const stepSize = 100 / steps;
-
-      timer = setInterval(() => {
-        progress += stepSize;
-        if (progress >= 100) {
-          progress = 100;
-          clearInterval(timer);
-          // Simulate a "fully watched" real ad
-          onRealAdFinished(true);
-        }
-        progressBar.style.width = progress + "%";
-      }, TICK_MS);
+      if (timer) clearTimeout(timer);
+      timer = setTimeout(() => {
+        onRealAdFinished(true);
+      }, BASE_AD_MS);
     }
 
-    // Single function to be called when a real ad finishes.
-    // watchedFull = true  → give reward
-    // watchedFull = false → no reward
     function onRealAdFinished(watchedFull) {
-      if (!watching) return; // safety
+      if (!watching) return;
 
       watching = false;
       watchButton.disabled = false;
       watchButton.classList.remove("playing");
-      progressBar.style.width = "100%";
 
       if (!watchedFull) {
-        statusText.textContent = "Ad closed early. No reward this time.";
+        statusText.textContent =
+          "Ad closed early. No reward this time. Tap again to try another.";
         updateUI();
         return;
       }
@@ -567,7 +563,7 @@
       points += reward;
       statusText.textContent = `Ad finished! You gained ${reward.toFixed(
         0
-      )} points.${message} Click again to watch another.`;
+      )} points.${message} Tap again to watch another.`;
       updateUI();
     }
 
@@ -576,12 +572,14 @@
       if (watching) return;
       const cost = getBetterDealsCost();
       if (points < cost) {
-        statusText.textContent = "Not enough points for Better Ad Deals.";
+        statusText.textContent =
+          "Not enough points for Better Ad Deals.";
         return;
       }
       points -= cost;
       betterDealsLevel += 1;
-      statusText.textContent = `Better Ad Deals upgraded to level ${betterDealsLevel}. Base points per ad increased.`;
+      statusText.textContent =
+        "Better Ad Deals upgraded. Base points per ad increased.";
       updateUI();
     }
 
@@ -621,7 +619,8 @@
       if (watching) return;
       const cost = getContractsCost();
       if (points < cost) {
-        statusText.textContent = "Not enough points for Long-Term Contracts.";
+        statusText.textContent =
+          "Not enough points for Long-Term Contracts.";
         return;
       }
       const before = getPassivePerSecond();
