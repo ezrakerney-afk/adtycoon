@@ -278,7 +278,7 @@
           <div class="progress-bar" id="progressBar"></div>
         </div>
 
-        <!-- Only reward text, no "Generic Brand Campaign" -->
+        <!-- Only reward text -->
         <div class="ad-meta">
           Reward: <span id="rewardInfo">5 points</span>
         </div>
@@ -418,13 +418,14 @@
     let contractsLevel = 0;     // +2 passive pts/s per level
 
     const BASE_POINTS_PER_AD = 5;
-    const BASE_AD_MS = 15000; // 15 seconds
+    const BASE_AD_MS = 15000; // 15 seconds (used by fake timer)
     const TICK_MS = 100;
 
     let watching = false;
     let progress = 0;
     let timer = null;
 
+    // ---- SCALING HELPERS ----
     function getBasePointsPerAd() {
       return BASE_POINTS_PER_AD + betterDealsLevel * 5;
     }
@@ -461,6 +462,7 @@
       return getBasePointsPerAd() * getMultiplier();
     }
 
+    // ---- UI UPDATE ----
     function updateUI() {
       const ptsPerAd = getPointsPerAd();
       const passive = getPassivePerSecond();
@@ -491,6 +493,9 @@
       contractsBtn.disabled = watching || points < contractsCost;
     }
 
+    // ---- AD FLOW ----
+
+    // Call this when the player clicks the button
     function startAd() {
       if (watching) return;
       watching = true;
@@ -500,6 +505,24 @@
       watchButton.classList.add("playing");
       statusText.textContent = "Ad is playing... wait for it to finish to earn points.";
 
+      // >>> THIS is where you plug in your real rewarded ad <<<
+      //
+      // Example pseudo-code for a real SDK:
+      //
+      //   myAdSdk.showRewardedAd({
+      //     onComplete: () => onRealAdFinished(true),   // watched full, give reward
+      //     onClose:    () => onRealAdFinished(false),  // closed early, no reward
+      //     onError:    () => onRealAdFinished(false)   // error, no reward
+      //   });
+      //
+      // For now we still run a fake timer so the game works without ads:
+      simulateFakeAdTimer();
+      updateUI();
+    }
+
+    // Fake timer just to visualize an ad playing.
+    // Remove / disable this once real ads are connected.
+    function simulateFakeAdTimer() {
       const steps = BASE_AD_MS / TICK_MS;
       const stepSize = 100 / steps;
 
@@ -508,15 +531,30 @@
         if (progress >= 100) {
           progress = 100;
           clearInterval(timer);
-          finishAd();
+          // Simulate a "fully watched" real ad
+          onRealAdFinished(true);
         }
         progressBar.style.width = progress + "%";
       }, TICK_MS);
-
-      updateUI();
     }
 
-    function finishAd() {
+    // Single function to be called when a real ad finishes.
+    // watchedFull = true  → give reward
+    // watchedFull = false → no reward
+    function onRealAdFinished(watchedFull) {
+      if (!watching) return; // safety
+
+      watching = false;
+      watchButton.disabled = false;
+      watchButton.classList.remove("playing");
+      progressBar.style.width = "100%";
+
+      if (!watchedFull) {
+        statusText.textContent = "Ad closed early. No reward this time.";
+        updateUI();
+        return;
+      }
+
       let reward = getPointsPerAd();
       let message = "";
 
@@ -527,15 +565,13 @@
       }
 
       points += reward;
-      watching = false;
-      watchButton.disabled = false;
-      watchButton.classList.remove("playing");
       statusText.textContent = `Ad finished! You gained ${reward.toFixed(
         0
       )} points.${message} Click again to watch another.`;
       updateUI();
     }
 
+    // ---- UPGRADES ----
     function buyBetterDeals() {
       if (watching) return;
       const cost = getBetterDealsCost();
@@ -596,6 +632,7 @@
       updateUI();
     }
 
+    // Passive income loop
     function passiveTick() {
       const passive = getPassivePerSecond();
       if (passive > 0) {
@@ -604,6 +641,7 @@
       }
     }
 
+    // Event listeners
     watchButton.addEventListener("click", startAd);
     betterDealsBtn.addEventListener("click", buyBetterDeals);
     multiplierBtn.addEventListener("click", buyMultiplier);
@@ -611,7 +649,6 @@
     contractsBtn.addEventListener("click", buyContracts);
 
     setInterval(passiveTick, 1000);
-
     updateUI();
   </script>
 </body>
