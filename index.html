@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Ad Tycoon</title>
+  <title>Ad Tycoon – Points Edition</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     * {
@@ -13,87 +13,155 @@
       margin: 0;
       min-height: 100vh;
       display: flex;
-      align-items: center;
+      align-items: stretch;
       justify-content: center;
-      background: #050816;
-      color: #f5f5f5;
+      background: radial-gradient(circle at top, #1e293b 0, #020617 55%, #000 100%);
+      color: #f9fafb;
     }
-    .game {
+    .shell {
       width: 100%;
-      max-width: 480px;
-      padding: 20px 24px 24px;
-      border-radius: 18px;
-      background: rgba(15, 23, 42, 0.96);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.55);
-      border: 1px solid rgba(148, 163, 184, 0.3);
-    }
-    .game-header {
+      max-width: 960px;
+      padding: 20px;
       display: flex;
-      justify-content: space-between;
+      gap: 16px;
+    }
+    .panel {
+      background: rgba(15, 23, 42, 0.96);
+      border-radius: 18px;
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.65);
+      padding: 16px 18px 18px;
+    }
+    .panel-main {
+      flex: 3;
+      display: flex;
+      flex-direction: column;
       align-items: center;
-      margin-bottom: 14px;
     }
-    h1 {
-      font-size: 1.4rem;
+    .panel-upgrades {
+      flex: 2;
+      overflow-y: auto;
+      max-height: calc(100vh - 40px);
+    }
+
+    /* Header / stats */
+    .header {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .title {
       margin: 0;
+      font-size: 1.4rem;
     }
-    .badge {
+    .tag {
       font-size: 0.7rem;
-      padding: 3px 7px;
-      border-radius: 999px;
-      background: rgba(56, 189, 248, 0.15);
-      border: 1px solid rgba(56, 189, 248, 0.6);
       text-transform: uppercase;
-      letter-spacing: 0.08em;
+      padding: 3px 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(52, 211, 153, 0.7);
+      background: rgba(6, 95, 70, 0.3);
+      letter-spacing: 0.09em;
     }
-    .stats {
+    .stats-row {
+      width: 100%;
       display: flex;
       gap: 10px;
-      margin-bottom: 16px;
+      margin-bottom: 12px;
     }
     .stat {
       flex: 1;
-      padding: 10px 11px;
+      padding: 8px 10px;
       border-radius: 12px;
-      background: rgba(15, 23, 42, 0.9);
       border: 1px solid rgba(51, 65, 85, 0.9);
+      background: rgba(15, 23, 42, 0.9);
     }
     .stat-label {
-      font-size: 0.7rem;
+      font-size: 0.72rem;
       text-transform: uppercase;
       letter-spacing: 0.08em;
       color: #9ca3af;
-      margin-bottom: 4px;
+      margin-bottom: 2px;
     }
     .stat-value {
-      font-size: 1.1rem;
+      font-size: 1.25rem;
       font-weight: 600;
     }
-    .ad-card {
-      margin-top: 4px;
-      padding: 12px 12px 14px;
-      border-radius: 14px;
-      background: radial-gradient(circle at top left, #22c55e33, #1e293b);
-      border: 1px solid rgba(34, 197, 94, 0.6);
+
+    /* Big ad button area */
+    .ad-area {
+      margin-top: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
     }
-    .ad-name {
-      font-weight: 600;
-      margin: 0 0 4px;
-      font-size: 0.98rem;
+    .ad-circle-wrap {
+      position: relative;
+      width: 200px;
+      height: 200px;
+      margin-bottom: 6px;
     }
-    .ad-tagline {
-      font-size: 0.85rem;
-      color: #d1d5db;
-      margin: 0 0 10px;
+    .ad-circle-border {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: conic-gradient(
+        from 180deg,
+        #22c55e,
+        #a3e635,
+        #f97316,
+        #22c55e
+      );
+      opacity: 0.9;
+      filter: blur(0.2px);
     }
+    .ad-circle-inner {
+      position: absolute;
+      inset: 8px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 20%, #111827, #020617);
+      border: 2px solid rgba(15, 23, 42, 0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 4px;
+    }
+    #watchButton {
+      border: none;
+      background: transparent;
+      color: #f9fafb;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+    #watchButton span.big {
+      font-size: 1.15rem;
+      font-weight: 700;
+    }
+    #watchButton span.small {
+      font-size: 0.8rem;
+      opacity: 0.8;
+    }
+    #watchButton:disabled {
+      cursor: default;
+      opacity: 0.7;
+    }
+
+    /* progress bar under button */
     .progress-wrap {
-      width: 100%;
-      height: 10px;
+      width: 80%;
+      max-width: 320px;
+      height: 12px;
       border-radius: 999px;
-      background: rgba(15, 23, 42, 0.9);
+      background: rgba(15, 23, 42, 0.95);
+      border: 1px solid rgba(55, 65, 81, 0.9);
       overflow: hidden;
-      border: 1px solid rgba(55, 65, 81, 0.8);
-      margin-bottom: 10px;
     }
     .progress-bar {
       height: 100%;
@@ -101,129 +169,279 @@
       background: linear-gradient(90deg, #22c55e, #a3e635);
       transition: width 0.1s linear;
     }
-    button {
-      width: 100%;
-      padding: 10px 14px;
-      border-radius: 999px;
-      border: none;
-      font-size: 0.95rem;
-      font-weight: 600;
-      cursor: pointer;
-      background: linear-gradient(90deg, #22c55e, #16a34a);
-      color: #022c22;
-      box-shadow: 0 8px 20px rgba(22, 163, 74, 0.45);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-    }
-    button[disabled] {
-      opacity: 0.55;
-      cursor: default;
-      box-shadow: none;
-    }
-    .button-sub {
-      font-size: 0.75rem;
-      opacity: 0.8;
-      margin-top: 4px;
+
+    .ad-meta {
+      font-size: 0.85rem;
+      color: #d1d5db;
       text-align: center;
-      color: #9ca3af;
     }
-    .upgrade-row {
+    #statusText {
+      font-size: 0.8rem;
+      color: #9ca3af;
+      margin-top: 2px;
+      text-align: center;
+    }
+
+    /* Upgrades */
+    .upgrades-header {
       display: flex;
       justify-content: space-between;
-      gap: 8px;
-      margin-top: 14px;
-      font-size: 0.85rem;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .upgrades-header h2 {
+      margin: 0;
+      font-size: 1rem;
+    }
+    .upgrades-header span {
+      font-size: 0.75rem;
+      color: #9ca3af;
+    }
+    .upgrade-card {
+      border-radius: 12px;
+      padding: 10px 10px 9px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(51, 65, 85, 0.9);
+      margin-bottom: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .upgrade-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 6px;
+    }
+    .upgrade-name {
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+    .upgrade-level {
+      font-size: 0.75rem;
+      color: #9ca3af;
+    }
+    .upgrade-desc {
+      font-size: 0.8rem;
       color: #e5e7eb;
     }
-    .upgrade-row span {
-      opacity: 0.9;
+    .upgrade-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 4px;
+      gap: 6px;
+    }
+    .upgrade-cost {
+      font-size: 0.8rem;
+      color: #e5e7eb;
+    }
+    .upgrade-btn {
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      background: #020617;
+      color: #f9fafb;
+      padding: 4px 10px;
+      font-size: 0.78rem;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .upgrade-btn:disabled {
+      opacity: 0.5;
+      cursor: default;
+    }
+
+    @media (max-width: 800px) {
+      .shell {
+        flex-direction: column;
+      }
+      .panel-upgrades {
+        max-height: none;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="game">
-    <div class="game-header">
-      <h1>Ad Tycoon (Prototype)</h1>
-      <div class="badge">Web demo</div>
+  <div class="shell">
+    <!-- Main panel -->
+    <div class="panel panel-main">
+      <div class="header">
+        <h1 class="title">Ad Tycoon</h1>
+        <div class="tag">Points only</div>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat">
+          <div class="stat-label">Points</div>
+          <div class="stat-value"><span id="pointsDisplay">0</span></div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Points / Ad</div>
+          <div class="stat-value"><span id="perAdDisplay">5</span></div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Ad Length</div>
+          <div class="stat-value"><span id="adLengthDisplay">15</span>s</div>
+        </div>
+      </div>
+
+      <div class="ad-area">
+        <div class="ad-circle-wrap">
+          <div class="ad-circle-border"></div>
+          <div class="ad-circle-inner">
+            <button id="watchButton">
+              <span class="big">Watch Ad</span>
+              <span class="small">Earn points to grow your ad empire</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="progress-wrap">
+          <div class="progress-bar" id="progressBar"></div>
+        </div>
+
+        <div class="ad-meta">
+          Current ad: <strong>Generic Brand Spot</strong>  
+          Reward: <span id="rewardInfo">5 points</span>
+        </div>
+        <div id="statusText">
+          Click the ad to start. You must wait until it finishes to earn points.
+        </div>
+      </div>
     </div>
 
-    <div class="stats">
-      <div class="stat">
-        <div class="stat-label">Balance</div>
-        <div class="stat-value">$<span id="money">0</span></div>
-      </div>
-      <div class="stat">
-        <div class="stat-label">Per Ad</div>
-        <div class="stat-value">$<span id="perAd">5</span></div>
-      </div>
-    </div>
-
-    <div class="ad-card">
-      <p class="ad-name" id="adName">Galaxy Cola – Launch Spot</p>
-      <p class="ad-tagline" id="adTagline">
-        “Watch our new 15s spot to boost this campaign’s revenue.”
-      </p>
-
-      <div class="progress-wrap">
-        <div class="progress-bar" id="progressBar"></div>
+    <!-- Upgrades panel -->
+    <div class="panel panel-upgrades">
+      <div class="upgrades-header">
+        <h2>Upgrades</h2>
+        <span>Spend points to go faster</span>
       </div>
 
-      <button id="watchButton">
-        ▶ Watch Ad (15s)
-      </button>
-      <div class="button-sub" id="statusText">
-        Earn $<span id="rewardPreview">5</span> when the ad finishes.
+      <div class="upgrade-card">
+        <div class="upgrade-top">
+          <div>
+            <div class="upgrade-name">Better Ad Deals</div>
+            <div class="upgrade-level">Level <span id="morePointsLevelDisplay">0</span></div>
+          </div>
+        </div>
+        <div class="upgrade-desc">
+          Each level adds <strong>+5 points per ad</strong>.  
+          Start at 5 points, grow your payout like Cookie Clicker upgrades.
+        </div>
+        <div class="upgrade-bottom">
+          <div class="upgrade-cost">
+            Cost: <span id="morePointsCostDisplay">50</span> pts
+          </div>
+          <button class="upgrade-btn" id="morePointsBtn">Buy</button>
+        </div>
       </div>
 
-      <div class="upgrade-row">
-        <span>Targeting Level: <span id="targetLevel">1</span></span>
-        <span>
-          <button id="upgradeButton" style="padding:4px 10px;font-size:0.75rem;border-radius:999px;background:#0f172a;border:1px solid #4b5563;color:#e5e7eb;box-shadow:none;width:auto;">
-            Upgrade targeting ($50)
-          </button>
-        </span>
+      <div class="upgrade-card">
+        <div class="upgrade-top">
+          <div>
+            <div class="upgrade-name">Shorter Spots</div>
+            <div class="upgrade-level">Level <span id="shorterAdsLevelDisplay">0</span></div>
+          </div>
+        </div>
+        <div class="upgrade-desc">
+          Each level cuts <strong>2 seconds</strong> off the ad duration  
+          (down to a minimum of 3 seconds).
+        </div>
+        <div class="upgrade-bottom">
+          <div class="upgrade-cost">
+            Cost: <span id="shorterAdsCostDisplay">80</span> pts
+          </div>
+          <button class="upgrade-btn" id="shorterAdsBtn">Buy</button>
+        </div>
       </div>
     </div>
   </div>
 
   <script>
+    // DOM elements
+    const pointsDisplay = document.getElementById("pointsDisplay");
+    const perAdDisplay = document.getElementById("perAdDisplay");
+    const adLengthDisplay = document.getElementById("adLengthDisplay");
     const watchButton = document.getElementById("watchButton");
-    const upgradeButton = document.getElementById("upgradeButton");
     const progressBar = document.getElementById("progressBar");
-    const moneyEl = document.getElementById("money");
-    const perAdEl = document.getElementById("perAd");
-    const rewardPreviewEl = document.getElementById("rewardPreview");
     const statusText = document.getElementById("statusText");
-    const targetLevelEl = document.getElementById("targetLevel");
+    const rewardInfo = document.getElementById("rewardInfo");
 
-    let money = 0;
-    let basePerAd = 5;
-    let targetingLevel = 1;
+    const morePointsLevelDisplay = document.getElementById("morePointsLevelDisplay");
+    const shorterAdsLevelDisplay = document.getElementById("shorterAdsLevelDisplay");
+    const morePointsCostDisplay = document.getElementById("morePointsCostDisplay");
+    const shorterAdsCostDisplay = document.getElementById("shorterAdsCostDisplay");
+    const morePointsBtn = document.getElementById("morePointsBtn");
+    const shorterAdsBtn = document.getElementById("shorterAdsBtn");
+
+    // Game state
+    let points = 0;
+    let morePointsLevel = 0;
+    let shorterAdsLevel = 0;
+
+    const BASE_POINTS_PER_AD = 5;
+    const BASE_AD_MS = 15000; // 15s
+    const MIN_AD_MS = 3000;   // 3s minimum
+    const TICK_MS = 100;
+
     let watching = false;
     let progress = 0;
     let timer = null;
-    const AD_DURATION_MS = 15000; // 15 seconds
-    const TICK_MS = 100;          // progress update interval
+    let currentAdMs = BASE_AD_MS;
+
+    function getPointsPerAd() {
+      return BASE_POINTS_PER_AD + morePointsLevel * 5;
+    }
+
+    function getAdDurationMs() {
+      const raw = BASE_AD_MS - shorterAdsLevel * 2000; // -2s per level
+      return Math.max(MIN_AD_MS, raw);
+    }
+
+    function getMorePointsCost() {
+      // 50, 80, 128, ...
+      return Math.round(50 * Math.pow(1.6, morePointsLevel));
+    }
+
+    function getShorterAdsCost() {
+      // 80, 136, 231, ...
+      return Math.round(80 * Math.pow(1.7, shorterAdsLevel));
+    }
 
     function updateUI() {
-      moneyEl.textContent = money.toFixed(0);
-      const perAd = basePerAd * targetingLevel;
-      perAdEl.textContent = perAd.toFixed(0);
-      rewardPreviewEl.textContent = perAd.toFixed(0);
-      targetLevelEl.textContent = targetingLevel;
+      const ptsPerAd = getPointsPerAd();
+      currentAdMs = getAdDurationMs();
+      const adSeconds = (currentAdMs / 1000).toFixed(1).replace(/\.0$/, "");
+
+      pointsDisplay.textContent = points.toFixed(0);
+      perAdDisplay.textContent = ptsPerAd.toFixed(0);
+      adLengthDisplay.textContent = adSeconds;
+      rewardInfo.textContent = ptsPerAd.toFixed(0) + " points";
+
+      morePointsLevelDisplay.textContent = morePointsLevel;
+      shorterAdsLevelDisplay.textContent = shorterAdsLevel;
+
+      const mpCost = getMorePointsCost();
+      const saCost = getShorterAdsCost();
+
+      morePointsCostDisplay.textContent = mpCost;
+      shorterAdsCostDisplay.textContent = saCost;
+
+      // enable/disable upgrade buttons based on points
+      morePointsBtn.disabled = points < mpCost || watching;
+      shorterAdsBtn.disabled = points < saCost || watching;
     }
 
     function startAd() {
       if (watching) return;
       watching = true;
+      currentAdMs = getAdDurationMs();
       progress = 0;
       progressBar.style.width = "0%";
       watchButton.disabled = true;
-      statusText.textContent = "Ad playing... don't close this window.";
+      statusText.textContent = "Ad is playing... wait for it to finish to earn points.";
 
-      const steps = AD_DURATION_MS / TICK_MS;
+      const steps = currentAdMs / TICK_MS;
       const stepSize = 100 / steps;
 
       timer = setInterval(() => {
@@ -235,33 +453,52 @@
         }
         progressBar.style.width = progress + "%";
       }, TICK_MS);
-    }
 
-    function finishAd() {
-      const reward = basePerAd * targetingLevel;
-      money += reward;
-      watching = false;
-      watchButton.disabled = false;
-      statusText.textContent = `Ad completed. You earned $${reward.toFixed(
-        0
-      )}. Click again to run another ad.`;
       updateUI();
     }
 
-    function upgradeTargeting() {
-      const cost = 50;
-      if (money < cost) {
-        statusText.textContent = "Not enough funds to upgrade targeting ($50).";
+    function finishAd() {
+      const reward = getPointsPerAd();
+      points += reward;
+      watching = false;
+      watchButton.disabled = false;
+      statusText.textContent = `Ad finished! You gained ${reward.toFixed(
+        0
+      )} points. Click again to watch another.`;
+      updateUI();
+    }
+
+    function buyMorePoints() {
+      if (watching) return;
+      const cost = getMorePointsCost();
+      if (points < cost) {
+        statusText.textContent = "Not enough points for Better Ad Deals.";
         return;
       }
-      money -= cost;
-      targetingLevel += 1;
-      statusText.textContent = `Upgraded targeting to level ${targetingLevel}. Your ads pay more now.`;
+      points -= cost;
+      morePointsLevel += 1;
+      statusText.textContent = `Better Ad Deals upgraded to level ${morePointsLevel}. You earn more points per ad now.`;
+      updateUI();
+    }
+
+    function buyShorterAds() {
+      if (watching) return;
+      const cost = getShorterAdsCost();
+      if (points < cost) {
+        statusText.textContent = "Not enough points for Shorter Spots.";
+        return;
+      }
+      const before = (getAdDurationMs() / 1000).toFixed(1).replace(/\.0$/, "");
+      points -= cost;
+      shorterAdsLevel += 1;
+      const after = (getAdDurationMs() / 1000).toFixed(1).replace(/\.0$/, "");
+      statusText.textContent = `Shorter Spots upgraded to level ${shorterAdsLevel}. Ad time went from ${before}s to ${after}s.`;
       updateUI();
     }
 
     watchButton.addEventListener("click", startAd);
-    upgradeButton.addEventListener("click", upgradeTargeting);
+    morePointsBtn.addEventListener("click", buyMorePoints);
+    shorterAdsBtn.addEventListener("click", buyShorterAds);
 
     updateUI();
   </script>
