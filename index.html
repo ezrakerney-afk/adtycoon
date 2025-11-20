@@ -239,15 +239,15 @@
       cursor: default;
     }
 
-    /* flying +1 numbers (slower animation) */
+    /* flying +1 numbers (slower, no fade) */
     .point-fly {
       position: absolute;
       font-size: 1.2rem;
-      color: #16a34a;
+      color: #000000; /* black now */
       pointer-events: none;
       opacity: 1;
-      transition: transform 1.8s ease-out, opacity 1.8s ease-out;
-      will-change: transform, opacity;
+      transition: transform 1.8s ease-out;
+      will-change: transform;
     }
 
     @media (max-width: 800px) {
@@ -519,7 +519,7 @@
       contractsBtn.disabled = watching || points < contractsCost;
     }
 
-    // ---- REWARD ANIMATION (slow + incremental) ----
+    // ---- REWARD ANIMATION (slow + incremental, no fade) ----
     function playRewardAnimation(totalReward) {
       return new Promise((resolve) => {
         if (!panelMain) {
@@ -556,14 +556,13 @@
 
           panelMain.appendChild(span);
 
-          // give a tiny stagger so they don't all move at the *exact* same time
+          // small stagger so they don't all move at exactly the same time
           const delay = i * 80;
 
           setTimeout(() => {
             const dx = targetX - startX;
             const dy = targetY - startY;
             span.style.transform = `translate(${dx}px, ${dy}px)`;
-            span.style.opacity = "0";
 
             // when it "arrives", add its slice of the reward
             setTimeout(() => {
