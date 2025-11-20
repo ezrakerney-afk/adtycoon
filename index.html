@@ -4,6 +4,9 @@
   <meta charset="UTF-8" />
   <title>Ad Tycoon – Points Edition</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Tab icon -->
+  <link rel="icon" type="image/png" href="favicon.png" />
+
   <style>
     @font-face {
       font-family: "3Dumb";
@@ -239,14 +242,14 @@
       cursor: default;
     }
 
-    /* flying +1 numbers (slower, no fade) */
+    /* flying +1 numbers (slow, no fade) */
     .point-fly {
       position: absolute;
       font-size: 1.2rem;
-      color: #000000; /* black now */
+      color: #000000; /* black */
       pointer-events: none;
       opacity: 1;
-      transition: transform 1.8s ease-out;
+      transition: transform 1.8s ease-out; /* ONLY move */
       will-change: transform;
     }
 
@@ -447,7 +450,7 @@
     let contractsLevel = 0; // +2 passive pts/s per level
 
     const BASE_POINTS_PER_AD = 5;
-    const BASE_AD_MS = 15000; // used by fake timer
+    const BASE_AD_MS = 15000; // fake ad duration
     let watching = false;
     let timer = null;
 
@@ -545,18 +548,15 @@
           span.className = "point-fly";
           span.textContent = "1";
 
-          const startX =
-            40 + Math.random() * (containerRect.width - 80);
+          const startX = 40 + Math.random() * (containerRect.width - 80);
           const startY =
-            containerRect.height * 0.35 +
-            (Math.random() - 0.5) * 120;
+            containerRect.height * 0.35 + (Math.random() - 0.5) * 120;
 
           span.style.left = startX + "px";
           span.style.top = startY + "px";
 
           panelMain.appendChild(span);
 
-          // small stagger so they don't all move at exactly the same time
           const delay = i * 80;
 
           setTimeout(() => {
@@ -564,7 +564,6 @@
             const dy = targetY - startY;
             span.style.transform = `translate(${dx}px, ${dy}px)`;
 
-            // when it "arrives", add its slice of the reward
             setTimeout(() => {
               let chunk = baseChunk;
               if (remainder > 0) {
@@ -595,7 +594,7 @@
         "Ad is playing... wait until it finishes to earn points.";
 
       // >>> plug real rewarded ad here <<<
-      // myAdSdk.showRewardedAd({
+      // adSdk.showRewardedAd({
       //   onComplete: () => onRealAdFinished(true),
       //   onClose: () => onRealAdFinished(false),
       //   onError: () => onRealAdFinished(false),
@@ -639,7 +638,7 @@
       statusText.textContent = `Ad finished! Points incoming...`;
       updateUI();
 
-      // play flying 1s, and let them increment the points in chunks
+      // flying 1s increment the points in chunks
       await playRewardAnimation(reward);
 
       statusText.textContent = `Ad finished! You gained ${reward.toFixed(
