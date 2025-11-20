@@ -21,40 +21,41 @@
 
     body {
       margin: 0;
-      min-height: 100vh;
+      height: 100vh;
+      width: 100vw;
       display: flex;
       align-items: stretch;
-      justify-content: center;
+      justify-content: stretch;
       background: #ffffff;
     }
 
     .shell {
-      width: 100%;
-      max-width: 960px;
-      padding: 20px;
       display: flex;
-      gap: 16px;
+      height: 100vh;
+      width: 100vw;
     }
 
     .panel {
       background: #ffffff;
-      border-radius: 18px;
+      padding: 24px;
       border: 1px solid #e5e7eb;
-      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.06);
-      padding: 16px 18px 18px;
     }
 
+    /* 2/3 main, 1/3 upgrades */
     .panel-main {
-      flex: 3;
+      flex: 2;
       display: flex;
       flex-direction: column;
-      align-items: center;
+      align-items: stretch;
+      border-right: none;
     }
 
     .panel-upgrades {
-      flex: 2;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
       overflow-y: auto;
-      max-height: calc(100vh - 40px);
+      max-height: 100vh;
     }
 
     .header {
@@ -62,18 +63,18 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 12px;
+      margin-bottom: 20px;
     }
 
     .title {
       margin: 0;
-      font-size: 1.4rem;
+      font-size: 2rem;
     }
 
     .tag {
-      font-size: 0.7rem;
+      font-size: 0.85rem;
       text-transform: uppercase;
-      padding: 3px 9px;
+      padding: 5px 12px;
       border-radius: 999px;
       border: 1px solid #6ee7b7;
       background: #ecfdf5;
@@ -83,53 +84,54 @@
     .stats-row {
       width: 100%;
       display: flex;
-      gap: 10px;
-      margin-bottom: 12px;
+      gap: 14px;
+      margin-bottom: 24px;
     }
 
     .stat {
       flex: 1;
-      padding: 8px 10px;
-      border-radius: 12px;
+      padding: 12px 14px;
+      border-radius: 10px;
       border: 1px solid #e5e7eb;
       background: #ffffff;
     }
 
     .stat-label {
-      font-size: 0.72rem;
+      font-size: 0.9rem;
       text-transform: uppercase;
       letter-spacing: 0.08em;
       color: #6b7280;
-      margin-bottom: 2px;
+      margin-bottom: 4px;
     }
 
     .stat-value {
-      font-size: 1.15rem;
+      font-size: 1.5rem;
       font-weight: 600;
     }
 
     .ad-area {
-      margin-top: 12px;
+      flex: 1;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 12px;
+      justify-content: center;
+      gap: 20px;
     }
 
     /* Circular watch button */
     #watchButton {
-      width: 170px;
-      height: 170px;
+      width: 220px;
+      height: 220px;
       border-radius: 50%;
-      border: 4px solid #7a0f0f;
+      border: 5px solid #7a0f0f;
       background: radial-gradient(circle at 30% 20%, #ffb3b3, #ff3131, #b81616);
       box-shadow:
-        0 12px 0 #5a0b0b,
-        0 18px 25px rgba(0, 0, 0, 0.25);
+        0 14px 0 #5a0b0b,
+        0 22px 28px rgba(0, 0, 0, 0.25);
       color: #000000;
-      font-size: 26px;
+      font-size: 32px;
       text-transform: uppercase;
-      letter-spacing: 0.07em;
+      letter-spacing: 0.09em;
       cursor: pointer;
       display: flex;
       align-items: center;
@@ -145,52 +147,53 @@
 
     /* Pressed/playing state */
     #watchButton.playing {
-      transform: translateY(6px);
+      transform: translateY(8px);
       box-shadow:
-        0 4px 0 #5a0b0b,
-        0 10px 18px rgba(0, 0, 0, 0.25);
+        0 6px 0 #5a0b0b,
+        0 12px 20px rgba(0, 0, 0, 0.25);
       background: radial-gradient(circle at 30% 20%, #ff8a8a, #e12727, #8f1010);
     }
 
     .ad-meta {
-      font-size: 0.85rem;
+      font-size: 1.1rem;
       color: #111827;
       text-align: center;
     }
 
     #statusText {
-      font-size: 0.8rem;
-      color: #6b7280;
-      margin-top: 2px;
+      font-size: 1rem;
+      color: #4b5563;
+      margin-top: 4px;
       text-align: center;
+      max-width: 480px;
     }
 
     .upgrades-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 10px;
+      margin-bottom: 16px;
     }
 
     .upgrades-header h2 {
       margin: 0;
-      font-size: 1rem;
+      font-size: 1.4rem;
     }
 
     .upgrades-header span {
-      font-size: 0.75rem;
+      font-size: 0.95rem;
       color: #6b7280;
     }
 
     .upgrade-card {
-      border-radius: 12px;
-      padding: 10px 10px 9px;
+      border-radius: 10px;
+      padding: 12px 12px 10px;
       background: #ffffff;
       border: 1px solid #e5e7eb;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 6px;
     }
 
     .upgrade-top {
@@ -201,17 +204,17 @@
     }
 
     .upgrade-name {
-      font-size: 0.9rem;
+      font-size: 1.1rem;
       font-weight: 600;
     }
 
     .upgrade-level {
-      font-size: 0.75rem;
+      font-size: 0.95rem;
       color: #6b7280;
     }
 
     .upgrade-desc {
-      font-size: 0.8rem;
+      font-size: 0.98rem;
       color: #111827;
     }
 
@@ -224,7 +227,7 @@
     }
 
     .upgrade-cost {
-      font-size: 0.8rem;
+      font-size: 1rem;
       color: #111827;
     }
 
@@ -233,8 +236,8 @@
       border: 1px solid #9ca3af;
       background: #f9fafb;
       color: #111827;
-      padding: 4px 10px;
-      font-size: 0.78rem;
+      padding: 5px 12px;
+      font-size: 0.95rem;
       cursor: pointer;
       white-space: nowrap;
     }
@@ -249,6 +252,13 @@
         flex-direction: column;
       }
 
+      .panel-main,
+      .panel-upgrades {
+        flex: none;
+        height: auto;
+        border-right: 1px solid #e5e7eb;
+      }
+
       .panel-upgrades {
         max-height: none;
       }
@@ -257,7 +267,7 @@
 </head>
 <body>
   <div class="shell">
-    <!-- Main panel -->
+    <!-- Main panel (2/3) -->
     <div class="panel panel-main">
       <div class="header">
         <h1 class="title">Ad Tycoon</h1>
@@ -287,16 +297,16 @@
           Reward: <span id="rewardInfo">5 points</span>
         </div>
         <div id="statusText">
-          Click the button to start. Wait until the ad finishes to earn points.
+          Tap the button to start an ad. When it finishes, you earn points.
         </div>
       </div>
     </div>
 
-    <!-- Upgrades panel -->
+    <!-- Upgrades panel (1/3, scrollable) -->
     <div class="panel panel-upgrades">
       <div class="upgrades-header">
         <h2>Upgrades</h2>
-        <span>Cookie-clicker style modifiers</span>
+        <span>Boost your ad empire</span>
       </div>
 
       <!-- Better Ad Deals: flat points per ad -->
@@ -434,8 +444,6 @@
 
     const BASE_POINTS_PER_AD = 5;
     const BASE_AD_MS = 15000; // used by fake timer
-    const TICK_MS = 100;
-
     let watching = false;
     let timer = null;
 
@@ -508,7 +516,6 @@
     }
 
     // ---- AD FLOW ----
-
     function startAd() {
       if (watching) return;
       watching = true;
@@ -518,14 +525,13 @@
         "Ad is playing... wait until it finishes to earn points.";
 
       // >>> plug real rewarded ad here <<<
-      // Example:
       // myAdSdk.showRewardedAd({
       //   onComplete: () => onRealAdFinished(true),
       //   onClose: () => onRealAdFinished(false),
       //   onError: () => onRealAdFinished(false),
       // });
 
-      simulateFakeAdTimer(); // keep for now so it works without a real SDK
+      simulateFakeAdTimer();
       updateUI();
     }
 
@@ -534,7 +540,7 @@
       if (timer) clearTimeout(timer);
       timer = setTimeout(() => {
         onRealAdFinished(true);
-      }, BASE_AD_MS);
+      }, BASE_POINTS_PER_AD * 3000); // you can tweak this if you want
     }
 
     function onRealAdFinished(watchedFull) {
