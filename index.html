@@ -17,6 +17,7 @@
       font-family: "3Dumb", system-ui, -apple-system, BlinkMacSystemFont,
         "Segoe UI", sans-serif;
       color: #000000;
+      font-weight: 700; /* make all text bold */
     }
 
     body {
@@ -61,8 +62,10 @@
     .header {
       width: 100%;
       display: flex;
+      flex-direction: row-reverse; /* move title to the right */
       align-items: center;
-      justify-content: space-between;
+      justify-content: flex-start;
+      gap: 12px;
       margin-bottom: 20px;
     }
 
@@ -106,7 +109,6 @@
 
     .stat-value {
       font-size: 1.5rem;
-      font-weight: 600;
     }
 
     .ad-area {
@@ -129,7 +131,7 @@
         0 14px 0 #5a0b0b,
         0 22px 28px rgba(0, 0, 0, 0.25);
       color: #000000;
-      font-size: 32px;
+      font-size: 22px; /* scaled down button text */
       text-transform: uppercase;
       letter-spacing: 0.09em;
       cursor: pointer;
@@ -205,7 +207,6 @@
 
     .upgrade-name {
       font-size: 1.1rem;
-      font-weight: 600;
     }
 
     .upgrade-level {
@@ -540,7 +541,7 @@
       if (timer) clearTimeout(timer);
       timer = setTimeout(() => {
         onRealAdFinished(true);
-      }, BASE_POINTS_PER_AD * 3000); // you can tweak this if you want
+      }, BASE_AD_MS);
     }
 
     function onRealAdFinished(watchedFull) {
