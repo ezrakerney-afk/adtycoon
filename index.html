@@ -2,11 +2,21 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>AD Tycoon</title>
+
+  <title>AD Tycoon – Ad Watching Tycoon Game | Ad Clicker Button Grinding Game</title>
+
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <!-- Google Search Console verification -->
   <meta name="google-site-verification" content="Dlz22YBcINeekz1mdX_NlcuNp6Rk-wHUn-PGoYJndC8" />
+
+  <!-- SEO description -->
+  <meta name="description"
+        content="AD Tycoon is an ad watching tycoon game and ad clicker button game. Press the big red button, watch ads, grind points, buy upgrades, and grow your advertisement grinder empire. A fun ad game, tycoon game, and grinding game all in one." />
+
+  <!-- Extra keywords (not super important for Google, but harmless) -->
+  <meta name="keywords"
+        content="AD Tycoon, ad game, ad games, ad watching game, ad watching tycoon game, advertisement game, advertisement grinder, ad grinder, ad clicker, clicker game, button game, red button game, tycoon game, idle tycoon, grinding game, fun ads, ad tycoon, tycoon ads, ad button game, ad idle, web ad game" />
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="favicon.png" />
@@ -29,18 +39,15 @@
 
     body {
       margin: 0;
-      height: 100vh;
-      width: 100vw;
-      display: flex;
-      align-items: stretch;
-      justify-content: stretch;
       background: #ffffff;
     }
 
     .shell {
       display: flex;
-      height: 100vh;
+      min-height: 100vh;
       width: 100vw;
+      align-items: stretch;
+      justify-content: stretch;
     }
 
     .panel {
@@ -89,12 +96,15 @@
       margin-bottom: 24px;
     }
 
+    /* stat box uses the drawn image */
     .stat {
       flex: 1;
-      padding: 12px 14px;
-      border-radius: 10px;
-      border: 1px solid #e5e7eb;
-      background: #ffffff;
+      position: relative;
+      padding: 22px 24px;
+      background: url("stat-box.png") center center no-repeat;
+      background-size: 100% 100%;
+      border: none;
+      border-radius: 0;
     }
 
     .stat-label {
@@ -102,7 +112,7 @@
       text-transform: uppercase;
       letter-spacing: 0.08em;
       color: #6b7280;
-      margin-bottom: 4px;
+      margin-bottom: 6px;
     }
 
     .stat-value {
@@ -257,6 +267,20 @@
       will-change: transform;
     }
 
+    /* About section under the game for SEO text */
+    .about-section {
+      max-width: 800px;
+      margin: 24px auto 40px;
+      padding: 0 16px 24px;
+      text-align: center;
+      font-size: 1rem;
+    }
+
+    .about-section p {
+      margin: 8px 0;
+      color: #111827;
+    }
+
     @media (max-width: 800px) {
       .shell {
         flex-direction: column;
@@ -272,6 +296,10 @@
       .panel-upgrades {
         max-height: none;
       }
+
+      .title {
+        margin-left: 0;
+      }
     }
   </style>
 </head>
@@ -285,15 +313,15 @@
 
       <div class="stats-row">
         <div class="stat">
-          <div class="stat-label">Points</div>
+          <div class="stat-label">POINTS</div>
           <div class="stat-value"><span id="pointsDisplay">0</span></div>
         </div>
         <div class="stat">
-          <div class="stat-label">Points / Ad</div>
+          <div class="stat-label">POINTS / AD</div>
           <div class="stat-value"><span id="perAdDisplay">5</span></div>
         </div>
         <div class="stat">
-          <div class="stat-label">Passive / s</div>
+          <div class="stat-label">PASSIVE / S</div>
           <div class="stat-value"><span id="passiveDisplay">0</span></div>
         </div>
       </div>
@@ -407,6 +435,21 @@
       </div>
     </div>
   </div>
+
+  <!-- About / SEO text -->
+  <section class="about-section">
+    <p>
+      AD Tycoon is an <strong>ad watching tycoon game</strong> and
+      <strong>ad clicker button game</strong> where you press a big red button
+      to start ads, grind points, and buy upgrades.
+    </p>
+    <p>
+      If you like <strong>tycoon games</strong>, <strong>button games</strong>,
+      or <strong>grinding games</strong> where you build numbers forever,
+      this little <strong>ad game</strong> lets you grow your own
+      <strong>advertisement grinder</strong> empire with fun ads and rewards.
+    </p>
+  </section>
 
   <script>
     // DOM elements
