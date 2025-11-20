@@ -49,6 +49,8 @@
       flex-direction: column;
       align-items: stretch;
       border-right: none;
+      position: relative; /* for flying numbers */
+      overflow: hidden;
     }
 
     .panel-upgrades {
@@ -70,8 +72,7 @@
     .title {
       margin: 0;
       font-size: 2rem;
-      /* shift title to the right about halfway compared to last time */
-      margin-left: 20%;
+      margin-left: 20%; /* shifted slightly right */
     }
 
     .stats-row {
@@ -236,6 +237,17 @@
     .upgrade-btn:disabled {
       opacity: 0.5;
       cursor: default;
+    }
+
+    /* flying +1 numbers */
+    .point-fly {
+      position: absolute;
+      font-size: 1.2rem;
+      color: #16a34a;
+      pointer-events: none;
+      opacity: 1;
+      transition: transform 0.6s ease-out, opacity 0.6s ease-out;
+      will-change: transform, opacity;
     }
 
     @media (max-width: 800px) {
@@ -424,6 +436,8 @@
     const contractsCostDisplay = document.getElementById("contractsCostDisplay");
     const contractsBtn = document.getElementById("contractsBtn");
 
+    const panelMain = document.querySelector(".panel-main");
+
     // Game state
     let points = 0;
 
@@ -505,6 +519,57 @@
       contractsBtn.disabled = watching || points < contractsCost;
     }
 
+    // ---- REWARD ANIMATION ----
+    function playRewardAnimation(reward) {
+      return new Promise((resolve) => {
+        if (!panelMain) {
+          resolve();
+          return;
+        }
+
+        const containerRect = panelMain.getBoundingClientRect();
+        const targetRect = pointsDisplay.getBoundingClientRect();
+        const targetX =
+          targetRect.left + targetRect.width / 2 - containerRect.left;
+        const targetY =
+          targetRect.top + targetRect.height / 2 - containerRect.top;
+
+        const count = 5; // five little 1s
+
+        for (let i = 0; i < count; i++) {
+          const span = document.createElement("span");
+          span.className = "point-fly";
+          span.textContent = "1";
+
+          const startX =
+            40 + Math.random() * (containerRect.width - 80);
+          const startY =
+            containerRect.height * 0.35 +
+            (Math.random() - 0.5) * 120;
+
+          span.style.left = startX + "px";
+          span.style.top = startY + "px";
+
+          panelMain.appendChild(span);
+
+          // trigger transition
+          requestAnimationFrame(() => {
+            const dx = targetX - startX;
+            const dy = targetY - startY;
+            span.style.transform = `translate(${dx}px, ${dy}px)`;
+            span.style.opacity = "0";
+          });
+
+          // cleanup
+          setTimeout(() => {
+            span.remove();
+          }, 650);
+        }
+
+        setTimeout(resolve, 650);
+      });
+    }
+
     // ---- AD FLOW ----
     function startAd() {
       if (watching) return;
@@ -533,7 +598,7 @@
       }, BASE_AD_MS);
     }
 
-    function onRealAdFinished(watchedFull) {
+    async function onRealAdFinished(watchedFull) {
       if (!watching) return;
 
       watching = false;
@@ -555,6 +620,12 @@
         reward *= 2;
         message = " Viral hit! 2x points!";
       }
+
+      statusText.textContent = `Ad finished! Points incoming...`;
+      updateUI();
+
+      // play flying 1s, then add the reward
+      await playRewardAnimation(reward);
 
       points += reward;
       statusText.textContent = `Ad finished! You gained ${reward.toFixed(
