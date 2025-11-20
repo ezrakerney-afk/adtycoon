@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <title>AD Tycoon</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <!-- Tab icon -->
   <link rel="icon" type="image/png" href="favicon.png" />
 
   <style>
@@ -20,7 +19,7 @@
       font-family: "3Dumb", system-ui, -apple-system, BlinkMacSystemFont,
         "Segoe UI", sans-serif;
       color: #000000;
-      font-weight: 700; /* all text bold */
+      font-weight: 700;
     }
 
     body {
@@ -52,7 +51,7 @@
       flex-direction: column;
       align-items: stretch;
       border-right: none;
-      position: relative; /* for flying numbers */
+      position: relative;
       overflow: hidden;
     }
 
@@ -114,26 +113,20 @@
       gap: 20px;
     }
 
-    /* Circular AD button */
+    /* IMAGE-BASED AD BUTTON */
     #watchButton {
-      width: 220px;
-      height: 220px;
-      border-radius: 50%;
-      border: 5px solid #7a0f0f;
-      background: radial-gradient(circle at 30% 20%, #ffb3b3, #ff3131, #b81616);
-      box-shadow:
-        0 14px 0 #5a0b0b,
-        0 22px 28px rgba(0, 0, 0, 0.25);
-      color: #000000;
-      font-size: 42px;          /* bigger text */
-      text-transform: uppercase;
-      letter-spacing: 0.15em;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: transform 0.08s ease, box-shadow 0.08s ease, background 0.1s ease;
+      width: 260px;
+      height: 260px;
+      border: none;
       padding: 0;
+      margin: 0;
+      background: url("button-up.png") center center no-repeat;
+      background-size: contain;
+      cursor: pointer;
+      outline: none;
+      /* hide text but keep it for accessibility */
+      color: transparent;
+      text-indent: -9999px;
     }
 
     #watchButton:disabled {
@@ -141,12 +134,9 @@
       opacity: 0.9;
     }
 
+    /* pressed state uses the pushed-down image */
     #watchButton.playing {
-      transform: translateY(8px);
-      box-shadow:
-        0 6px 0 #5a0b0b,
-        0 12px 20px rgba(0, 0, 0, 0.25);
-      background: radial-gradient(circle at 30% 20%, #ff8a8a, #e12727, #8f1010);
+      background-image: url("button-down.png");
     }
 
     .ad-meta {
@@ -241,7 +231,6 @@
       cursor: default;
     }
 
-    /* flying +1 numbers (slow, no fade) */
     .point-fly {
       position: absolute;
       font-size: 1.2rem;
@@ -294,8 +283,8 @@
       </div>
 
       <div class="ad-area">
-        <!-- Circular AD button -->
-        <button id="watchButton">AD</button>
+        <!-- Button now uses images, text is hidden -->
+        <button id="watchButton" aria-label="Watch Ad">AD</button>
 
         <div class="ad-meta">
           Reward: <span id="rewardInfo">5 points</span>
@@ -313,7 +302,7 @@
         <span>Boost your ad empire</span>
       </div>
 
-      <!-- Better Ad Deals: flat points per ad -->
+      <!-- Better Ad Deals -->
       <div class="upgrade-card">
         <div class="upgrade-top">
           <div>
@@ -335,7 +324,7 @@
         </div>
       </div>
 
-      <!-- Premium Brands: multiplier -->
+      <!-- Premium Brands -->
       <div class="upgrade-card">
         <div class="upgrade-top">
           <div>
@@ -346,8 +335,7 @@
           </div>
         </div>
         <div class="upgrade-desc">
-          Each level adds <strong>+0.25x</strong> to your points-per-ad multiplier.<br />
-          e.g. 1.0x → 1.25x → 1.5x → 1.75x...
+          Each level adds <strong>+0.25x</strong> to your points-per-ad multiplier.
         </div>
         <div class="upgrade-bottom">
           <div class="upgrade-cost">
@@ -357,7 +345,7 @@
         </div>
       </div>
 
-      <!-- Viral Moments: chance to double reward -->
+      <!-- Viral Moments -->
       <div class="upgrade-card">
         <div class="upgrade-top">
           <div>
@@ -368,8 +356,7 @@
           </div>
         </div>
         <div class="upgrade-desc">
-          Each level adds a <strong>+5%</strong> chance that an ad will go viral<br />
-          and give <strong>2x points</strong> for that single watch.
+          Each level adds a <strong>+5%</strong> chance an ad goes viral and gives 2x points.
         </div>
         <div class="upgrade-bottom">
           <div class="upgrade-cost">
@@ -379,7 +366,7 @@
         </div>
       </div>
 
-      <!-- Long-Term Contracts: passive points per second -->
+      <!-- Long-Term Contracts -->
       <div class="upgrade-card">
         <div class="upgrade-top">
           <div>
@@ -390,8 +377,7 @@
           </div>
         </div>
         <div class="upgrade-desc">
-          Each level adds <strong>+2 passive points per second</strong>.<br />
-          Stacks and runs even while ads are playing.
+          Each level adds <strong>+2 passive points per second</strong>.
         </div>
         <div class="upgrade-bottom">
           <div class="upgrade-cost">
@@ -404,7 +390,6 @@
   </div>
 
   <script>
-    // DOM elements
     const pointsDisplay = document.getElementById("pointsDisplay");
     const perAdDisplay = document.getElementById("perAdDisplay");
     const passiveDisplay = document.getElementById("passiveDisplay");
@@ -412,48 +397,36 @@
     const statusText = document.getElementById("statusText");
     const rewardInfo = document.getElementById("rewardInfo");
 
-    const betterDealsLevelDisplay = document.getElementById(
-      "betterDealsLevelDisplay"
-    );
-    const betterDealsCostDisplay = document.getElementById(
-      "betterDealsCostDisplay"
-    );
+    const betterDealsLevelDisplay = document.getElementById("betterDealsLevelDisplay");
+    const betterDealsCostDisplay = document.getElementById("betterDealsCostDisplay");
     const betterDealsBtn = document.getElementById("betterDealsBtn");
 
-    const multiplierLevelDisplay = document.getElementById(
-      "multiplierLevelDisplay"
-    );
-    const multiplierCostDisplay = document.getElementById(
-      "multiplierCostDisplay"
-    );
+    const multiplierLevelDisplay = document.getElementById("multiplierLevelDisplay");
+    const multiplierCostDisplay = document.getElementById("multiplierCostDisplay");
     const multiplierBtn = document.getElementById("multiplierBtn");
 
     const bonusChanceDisplay = document.getElementById("bonusChanceDisplay");
     const bonusCostDisplay = document.getElementById("bonusCostDisplay");
     const bonusBtn = document.getElementById("bonusBtn");
 
-    const contractsLevelDisplay = document.getElementById(
-      "contractsLevelDisplay"
-    );
+    const contractsLevelDisplay = document.getElementById("contractsLevelDisplay");
     const contractsCostDisplay = document.getElementById("contractsCostDisplay");
     const contractsBtn = document.getElementById("contractsBtn");
 
     const panelMain = document.querySelector(".panel-main");
 
-    // Game state
     let points = 0;
 
-    let betterDealsLevel = 0; // +5 base pts per level
-    let multiplierLevel = 0; // +0.25x per level
-    let bonusLevel = 0; // +5% bonus chance per level
-    let contractsLevel = 0; // +2 passive pts/s per level
+    let betterDealsLevel = 0;
+    let multiplierLevel = 0;
+    let bonusLevel = 0;
+    let contractsLevel = 0;
 
     const BASE_POINTS_PER_AD = 5;
-    const BASE_AD_MS = 15000; // fake ad duration
+    const BASE_AD_MS = 15000;
     let watching = false;
     let timer = null;
 
-    // ---- SCALING HELPERS ----
     function getBasePointsPerAd() {
       return BASE_POINTS_PER_AD + betterDealsLevel * 5;
     }
@@ -490,7 +463,6 @@
       return getBasePointsPerAd() * getMultiplier();
     }
 
-    // ---- UI UPDATE ----
     function updateUI() {
       const ptsPerAd = getPointsPerAd();
       const passive = getPassivePerSecond();
@@ -521,7 +493,6 @@
       contractsBtn.disabled = watching || points < contractsCost;
     }
 
-    // ---- REWARD ANIMATION (slow + incremental, no fade) ----
     function playRewardAnimation(totalReward) {
       return new Promise((resolve) => {
         if (!panelMain) {
@@ -531,10 +502,8 @@
 
         const containerRect = panelMain.getBoundingClientRect();
         const targetRect = pointsDisplay.getBoundingClientRect();
-        const targetX =
-          targetRect.left + targetRect.width / 2 - containerRect.left;
-        const targetY =
-          targetRect.top + targetRect.height / 2 - containerRect.top;
+        const targetX = targetRect.left + targetRect.width / 2 - containerRect.left;
+        const targetY = targetRect.top + targetRect.height / 2 - containerRect.top;
 
         const count = 5;
         const baseChunk = Math.floor(totalReward / count);
@@ -548,8 +517,7 @@
           span.textContent = "1";
 
           const startX = 40 + Math.random() * (containerRect.width - 80);
-          const startY =
-            containerRect.height * 0.35 + (Math.random() - 0.5) * 120;
+          const startY = containerRect.height * 0.35 + (Math.random() - 0.5) * 120;
 
           span.style.left = startX + "px";
           span.style.top = startY + "px";
@@ -583,7 +551,6 @@
       });
     }
 
-    // ---- AD FLOW ----
     function startAd() {
       if (watching) return;
       watching = true;
@@ -592,7 +559,6 @@
       statusText.textContent =
         "Ad is playing... wait until it finishes to earn points.";
 
-      // plug real rewarded ad here later
       simulateFakeAdTimer();
       updateUI();
     }
@@ -627,24 +593,22 @@
         message = " Viral hit! 2x points!";
       }
 
-      statusText.textContent = `Ad finished! Points incoming...`;
+      statusText.textContent = "Ad finished! Points incoming...";
       updateUI();
 
       await playRewardAnimation(reward);
 
-      statusText.textContent = `Ad finished! You gained ${reward.toFixed(
-        0
-      )} points.${message} Tap again to watch another.`;
+      statusText.textContent =
+        `Ad finished! You gained ${reward.toFixed(0)} points.` + message +
+        " Tap again to watch another.";
       updateUI();
     }
 
-    // ---- UPGRADES ----
     function buyBetterDeals() {
       if (watching) return;
       const cost = getBetterDealsCost();
       if (points < cost) {
-        statusText.textContent =
-          "Not enough points for Better Ad Deals.";
+        statusText.textContent = "Not enough points for Better Ad Deals.";
         return;
       }
       points -= cost;
@@ -665,9 +629,8 @@
       points -= cost;
       multiplierLevel += 1;
       const after = getMultiplier();
-      statusText.textContent = `Premium Brands upgraded. Multiplier went from ${before.toFixed(
-        2
-      )}x to ${after.toFixed(2)}x.`;
+      statusText.textContent =
+        `Premium Brands upgraded. Multiplier went from ${before.toFixed(2)}x to ${after.toFixed(2)}x.`;
       updateUI();
     }
 
@@ -682,7 +645,8 @@
       points -= cost;
       bonusLevel += 1;
       const after = (getBonusChance() * 100).toFixed(0);
-      statusText.textContent = `Viral Moments upgraded. Bonus chance went from ${before}% to ${after}%.`;
+      statusText.textContent =
+        `Viral Moments upgraded. Bonus chance went from ${before}% to ${after}%.`;
       updateUI();
     }
 
@@ -690,19 +654,18 @@
       if (watching) return;
       const cost = getContractsCost();
       if (points < cost) {
-        statusText.textContent =
-          "Not enough points for Long-Term Contracts.";
+        statusText.textContent = "Not enough points for Long-Term Contracts.";
         return;
       }
       const before = getPassivePerSecond();
       points -= cost;
       contractsLevel += 1;
       const after = getPassivePerSecond();
-      statusText.textContent = `Long-Term Contracts upgraded. Passive points per second went from ${before} to ${after}.`;
+      statusText.textContent =
+        `Long-Term Contracts upgraded. Passive points per second went from ${before} to ${after}.`;
       updateUI();
     }
 
-    // Passive income loop
     function passiveTick() {
       const passive = getPassivePerSecond();
       if (passive > 0) {
@@ -711,7 +674,6 @@
       }
     }
 
-    // Event listeners
     watchButton.addEventListener("click", startAd);
     betterDealsBtn.addEventListener("click", buyBetterDeals);
     multiplierBtn.addEventListener("click", buyMultiplier);
