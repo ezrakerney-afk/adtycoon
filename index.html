@@ -239,14 +239,14 @@
       cursor: default;
     }
 
-    /* flying +1 numbers */
+    /* flying +1 numbers (slower animation) */
     .point-fly {
       position: absolute;
       font-size: 1.2rem;
       color: #16a34a;
       pointer-events: none;
       opacity: 1;
-      transition: transform 0.6s ease-out, opacity 0.6s ease-out;
+      transition: transform 1.8s ease-out, opacity 1.8s ease-out;
       will-change: transform, opacity;
     }
 
@@ -519,8 +519,8 @@
       contractsBtn.disabled = watching || points < contractsCost;
     }
 
-    // ---- REWARD ANIMATION ----
-    function playRewardAnimation(reward) {
+    // ---- REWARD ANIMATION (slow + incremental) ----
+    function playRewardAnimation(totalReward) {
       return new Promise((resolve) => {
         if (!panelMain) {
           resolve();
@@ -535,6 +535,10 @@
           targetRect.top + targetRect.height / 2 - containerRect.top;
 
         const count = 5; // five little 1s
+        const baseChunk = Math.floor(totalReward / count);
+        let remainder = totalReward - baseChunk * count;
+        let doneCount = 0;
+        const travelTime = 1800; // ms (matches CSS 1.8s)
 
         for (let i = 0; i < count; i++) {
           const span = document.createElement("span");
@@ -552,21 +556,33 @@
 
           panelMain.appendChild(span);
 
-          // trigger transition
-          requestAnimationFrame(() => {
+          // give a tiny stagger so they don't all move at the *exact* same time
+          const delay = i * 80;
+
+          setTimeout(() => {
             const dx = targetX - startX;
             const dy = targetY - startY;
             span.style.transform = `translate(${dx}px, ${dy}px)`;
             span.style.opacity = "0";
-          });
 
-          // cleanup
-          setTimeout(() => {
-            span.remove();
-          }, 650);
+            // when it "arrives", add its slice of the reward
+            setTimeout(() => {
+              let chunk = baseChunk;
+              if (remainder > 0) {
+                chunk += 1;
+                remainder -= 1;
+              }
+              points += chunk;
+              updateUI();
+
+              span.remove();
+              doneCount++;
+              if (doneCount === count) {
+                resolve();
+              }
+            }, travelTime);
+          }, delay);
         }
-
-        setTimeout(resolve, 650);
       });
     }
 
@@ -624,10 +640,9 @@
       statusText.textContent = `Ad finished! Points incoming...`;
       updateUI();
 
-      // play flying 1s, then add the reward
+      // play flying 1s, and let them increment the points in chunks
       await playRewardAnimation(reward);
 
-      points += reward;
       statusText.textContent = `Ad finished! You gained ${reward.toFixed(
         0
       )} points.${message} Tap again to watch another.`;
