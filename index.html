@@ -17,7 +17,7 @@
       font-family: "3Dumb", system-ui, -apple-system, BlinkMacSystemFont,
         "Segoe UI", sans-serif;
       color: #000000;
-      font-weight: 700; /* make all text bold */
+      font-weight: 700; /* all text bold */
     }
 
     body {
@@ -62,26 +62,16 @@
     .header {
       width: 100%;
       display: flex;
-      flex-direction: row-reverse; /* move title to the right */
       align-items: center;
       justify-content: flex-start;
-      gap: 12px;
       margin-bottom: 20px;
     }
 
     .title {
       margin: 0;
       font-size: 2rem;
-    }
-
-    .tag {
-      font-size: 0.85rem;
-      text-transform: uppercase;
-      padding: 5px 12px;
-      border-radius: 999px;
-      border: 1px solid #6ee7b7;
-      background: #ecfdf5;
-      letter-spacing: 0.09em;
+      /* shift title to the right about halfway compared to last time */
+      margin-left: 20%;
     }
 
     .stats-row {
@@ -131,7 +121,7 @@
         0 14px 0 #5a0b0b,
         0 22px 28px rgba(0, 0, 0, 0.25);
       color: #000000;
-      font-size: 22px; /* scaled down button text */
+      font-size: 22px; /* smaller button text */
       text-transform: uppercase;
       letter-spacing: 0.09em;
       cursor: pointer;
@@ -272,7 +262,6 @@
     <div class="panel panel-main">
       <div class="header">
         <h1 class="title">Ad Tycoon</h1>
-        <div class="tag">Points only</div>
       </div>
 
       <div class="stats-row">
