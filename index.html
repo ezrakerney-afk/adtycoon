@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-<title>AD Tycoon</title>
+  <title>AD Tycoon</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <!-- Tab icon -->
   <link rel="icon" type="image/png" href="favicon.png" />
@@ -75,7 +75,7 @@
     .title {
       margin: 0;
       font-size: 2rem;
-      margin-left: 20%; /* shifted slightly right */
+      margin-left: 20%;
     }
 
     .stats-row {
@@ -114,7 +114,7 @@
       gap: 20px;
     }
 
-    /* Circular watch button */
+    /* Circular AD button */
     #watchButton {
       width: 220px;
       height: 220px;
@@ -125,9 +125,9 @@
         0 14px 0 #5a0b0b,
         0 22px 28px rgba(0, 0, 0, 0.25);
       color: #000000;
-      font-size: 22px; /* smaller button text */
+      font-size: 42px;          /* bigger text */
       text-transform: uppercase;
-      letter-spacing: 0.09em;
+      letter-spacing: 0.15em;
       cursor: pointer;
       display: flex;
       align-items: center;
@@ -141,7 +141,6 @@
       opacity: 0.9;
     }
 
-    /* Pressed/playing state */
     #watchButton.playing {
       transform: translateY(8px);
       box-shadow:
@@ -246,10 +245,10 @@
     .point-fly {
       position: absolute;
       font-size: 1.2rem;
-      color: #000000; /* black */
+      color: #000000;
       pointer-events: none;
       opacity: 1;
-      transition: transform 1.8s ease-out; /* ONLY move */
+      transition: transform 1.8s ease-out;
       will-change: transform;
     }
 
@@ -276,7 +275,7 @@
     <!-- Main panel (2/3) -->
     <div class="panel panel-main">
       <div class="header">
-        <h1 class="title">Ad Tycoon</h1>
+        <h1 class="title">AD Tycoon</h1>
       </div>
 
       <div class="stats-row">
@@ -295,8 +294,8 @@
       </div>
 
       <div class="ad-area">
-        <!-- Circular watch button -->
-        <button id="watchButton">Watch Ad</button>
+        <!-- Circular AD button -->
+        <button id="watchButton">AD</button>
 
         <div class="ad-meta">
           Reward: <span id="rewardInfo">5 points</span>
@@ -537,11 +536,11 @@
         const targetY =
           targetRect.top + targetRect.height / 2 - containerRect.top;
 
-        const count = 5; // five little 1s
+        const count = 5;
         const baseChunk = Math.floor(totalReward / count);
         let remainder = totalReward - baseChunk * count;
         let doneCount = 0;
-        const travelTime = 1800; // ms (matches CSS 1.8s)
+        const travelTime = 1800;
 
         for (let i = 0; i < count; i++) {
           const span = document.createElement("span");
@@ -593,18 +592,11 @@
       statusText.textContent =
         "Ad is playing... wait until it finishes to earn points.";
 
-      // >>> plug real rewarded ad here <<<
-      // adSdk.showRewardedAd({
-      //   onComplete: () => onRealAdFinished(true),
-      //   onClose: () => onRealAdFinished(false),
-      //   onError: () => onRealAdFinished(false),
-      // });
-
+      // plug real rewarded ad here later
       simulateFakeAdTimer();
       updateUI();
     }
 
-    // Fake timer: remove/disable after adding real ads
     function simulateFakeAdTimer() {
       if (timer) clearTimeout(timer);
       timer = setTimeout(() => {
@@ -638,7 +630,6 @@
       statusText.textContent = `Ad finished! Points incoming...`;
       updateUI();
 
-      // flying 1s increment the points in chunks
       await playRewardAnimation(reward);
 
       statusText.textContent = `Ad finished! You gained ${reward.toFixed(
